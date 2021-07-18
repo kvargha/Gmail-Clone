@@ -187,7 +187,7 @@ function TitleBar() {
       'showavatar': avatarOn,
     };
     // http://zetcode.com/javascript/axios/
-    axios.post('http://localhost:3010/v0/user/', userInfo, {}, getConfig('post'))
+    axios.post('http://localhost:3010/v0/user/', userInfo, getConfig('post'))
         .then((res) => {
           setEditUser(false);
         });
@@ -322,7 +322,7 @@ function TitleBar() {
             </IconButton>
             <Typography variant="h6" style={{flexGrow: 1}}>
             </Typography>
-            <IconButton color='inherit'
+            <IconButton color='inherit' 
               onClick={handleSave} aria-label='close'>
               <SaveIcon />
             </IconButton>
