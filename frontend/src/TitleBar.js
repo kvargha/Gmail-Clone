@@ -1,6 +1,7 @@
 // Referenced from Professor Harrison's Assignment 6 example
 import React, {useContext, useState, useEffect} from 'react';
 import {getConfig} from './services/auth';
+import {getEmail, logout} from './services/auth';
 import {useHistory} from 'react-router-dom';
 import {fade, makeStyles} from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -122,6 +123,7 @@ function TitleBar() {
   const [avatar, setAvatar] = useState();
   const [avatarOn, setAvatarOn] = useState();
   const [userName, setUserName] = useState();
+  const [email, setEmail] = useState();
 
   const [prompt, setPrompt] = useState(false);
   const [editAvatar, changeAvatar] = useState(false);
@@ -130,6 +132,8 @@ function TitleBar() {
   const theme = useTheme();
   // https://material-ui.com/components/use-media-query/#usemediaquery
   const notFullScreen = useMediaQuery(theme.breakpoints.down('md'));
+
+  const history = useHistory();
 
   const handleSearch = (e) => {
     const input = e.target.value;
@@ -168,6 +172,12 @@ function TitleBar() {
             setEditUser(false);
           }
         });
+  };
+
+  const handleLogout = () => {
+    handleClose();
+    logout();
+    history.push('/login');
   };
 
   const handleSave = () => {
@@ -219,6 +229,7 @@ function TitleBar() {
     axios.get('http://localhost:3010/v0/user', getConfig())
         .then((res) => {
           const userBody = res.data[0];
+          setEmail(getEmail())
           setAvatar(userBody['avatar']);
           setAvatarOn(userBody['showavatar']);
           setUserName(userBody['username']);
@@ -315,6 +326,7 @@ function TitleBar() {
               onClick={handleSave} aria-label='close'>
               <SaveIcon />
             </IconButton>
+            <Button size='small' variant="contained" onClick={handleLogout}>Logout</Button>
           </Toolbar>
         </AppBar>
         <List component='nav' aria-label='main mailbox folders' // https://material-ui.com/components/lists/#lists
@@ -339,7 +351,7 @@ function TitleBar() {
               secondary={
                 <div>
                   <Typography // https://material-ui.com/components/typography/#typography
-                  >kvargha@ucsc.edu</Typography>
+                  >{email}</Typography>
                   <div>
                     <IconButton edge='start' color='inherit'
                       onClick={() => {
