@@ -200,9 +200,16 @@ function EmailViewer() {
         .then((res) => {
           const mailboxList = res.data;
           mailboxList.map((box) => {
-            if (box.mailbox != 'Sent' && box.mailbox != 'Drafts' &&
+            // Prevent user from moving Sent emails to inbox
+            if (mailbox == 'Sent') {
+              if (box.mailbox != 'Sent' && box.mailbox != 'Drafts' &&
+                box.mailbox != mailbox && box.mailbox != 'Inbox') {
+                  mailboxes.push(box.mailbox);
+              }
+            }
+            else if (box.mailbox != 'Sent' && box.mailbox != 'Drafts' &&
               box.mailbox != mailbox) {
-              mailboxes.push(box.mailbox);
+                mailboxes.push(box.mailbox);
             }
           });
           const viewer = (<div>

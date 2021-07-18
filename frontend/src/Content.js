@@ -148,7 +148,6 @@ function Content() {
     }
     const starred = emailArray.length == 0 ? star : emailArray[index].starred;
     // http://zetcode.com/javascript/axios/
-    console.log('test')
     axios.put('http://localhost:3010/v0/mail/' + id + '?starred=' + starred, {}, getConfig('put'))
         .then(() => {
           setRerender(!rerender);

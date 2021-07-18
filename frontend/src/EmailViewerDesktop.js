@@ -195,11 +195,19 @@ function EmailViewerDesktop() {
         .then((res) => {
           const mailboxList = res.data;
           mailboxList.map((box) => {
-            if (box.mailbox != 'Sent' && box.mailbox != 'Drafts' &&
+            // Prevent user from moving Sent emails to inbox
+            if (mailbox == 'Sent') {
+                if (box.mailbox != 'Sent' && box.mailbox != 'Drafts' &&
+                  box.mailbox != mailbox && box.mailbox != 'Inbox') {
+                    mailboxes.push(box.mailbox);
+                }
+            }
+            else if (box.mailbox != 'Sent' && box.mailbox != 'Drafts' &&
               box.mailbox != mailbox) {
-              mailboxes.push(box.mailbox);
+                mailboxes.push(box.mailbox);
             }
           });
+          console.log(mailboxes);
           const viewer = (<div style = {{minWidth: '44vw', maxWidth: '44vw'}}>
             <div className={classes.toolbar} />
             <div className={classes.root}></div>
