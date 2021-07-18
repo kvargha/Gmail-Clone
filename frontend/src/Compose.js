@@ -1,7 +1,6 @@
 // Referenced from Professor Harrison's Assignment 6 example
 import React, {useContext, useState} from 'react';
 import {getConfig} from './services/auth';
-import {useHistory} from 'react-router-dom';
 import SharedContext from './SharedContext';
 
 // Referenced https://material-ui.com/components/dialogs/#full-screen-dialogs

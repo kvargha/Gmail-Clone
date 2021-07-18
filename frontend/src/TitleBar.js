@@ -250,7 +250,7 @@ function TitleBar() {
             {!search ? (
           <Typography variant='h6' noWrap className={classes.title} // https://material-ui.com/components/typography/#typography
           >
-            CSE183 Mail - {mailbox}
+            Gmail - {mailbox}
           </Typography>): (null)}
           </Hidden>
           <div className={classes.search}>
@@ -339,7 +339,7 @@ function TitleBar() {
               secondary={
                 <div>
                   <Typography // https://material-ui.com/components/typography/#typography
-                  >cse183student@ucsc.edu</Typography>
+                  >kvargha@ucsc.edu</Typography>
                   <div>
                     <IconButton edge='start' color='inherit'
                       onClick={() => {

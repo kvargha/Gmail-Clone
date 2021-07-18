@@ -155,7 +155,7 @@ function MailboxList() {
                           >
                             <Typography variant='h6' className={classes.title} // https://material-ui.com/components/typography/#typography
                               style={{fontWeight: 'bold'}}>
-                              CSE183 Mail
+                              Gmail
                             </Typography>
                           </Hidden>
                           <Hidden mdDown>

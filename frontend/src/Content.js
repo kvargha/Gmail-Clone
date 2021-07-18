@@ -271,9 +271,12 @@ function Content() {
             setEmails(emailList);
           }
         })
-        .catch(() => {
-          //setEmails([]);
-          history.push('/login');
+        .catch((error) => {
+          if (error.status === 403) {
+            history.push('/login');
+          } else {
+            setEmails([]);
+          }
         });
   }, [search, mailbox, notFullScreen, searchVal, rerender]);
 
