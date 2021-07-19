@@ -207,7 +207,7 @@ function EmailViewerDesktop() {
                 mailboxes.push(box.mailbox);
             }
           });
-          console.log(mailboxes);
+          
           const viewer = (<div style = {{minWidth: '44vw', maxWidth: '44vw'}}>
             <div className={classes.toolbar} />
             <div className={classes.root}></div>

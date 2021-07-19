@@ -141,7 +141,7 @@ exports.updateUser = async (userBody) => {
   const query = {
     text: insert,
     values: [userBody.username, userBody.avatar, userBody.showavatar,
-      'cse183student@ucsc.edu'],
+      userBody.email],
   };
   await pool.query(query);
 };

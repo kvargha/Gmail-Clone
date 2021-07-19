@@ -185,17 +185,19 @@ function TitleBar() {
       'username': userName,
       'avatar': avatar,
       'showavatar': avatarOn,
+      'email': getEmail(),
     };
+    console.log(userInfo);
     // http://zetcode.com/javascript/axios/
     axios.post('http://localhost:3010/v0/user/', userInfo, getConfig('post'))
         .then((res) => {
           setEditUser(false);
-        });
+    });
   };
 
   const handleNo = () => {
     // http://zetcode.com/javascript/axios/
-    axios.get('http://localhost:3010/v0/user', {}, getConfig())
+    axios.get('http://localhost:3010/v0/user', getConfig())
         .then((res) => {
           const userBody = res.data[0];
           setAvatar(userBody['avatar']);

@@ -11,7 +11,7 @@ CREATE TABLE mail(id UUID UNIQUE PRIMARY KEY DEFAULT gen_random_uuid(),
 DROP TABLE IF EXISTS userInfo;
 CREATE TABLE userInfo(userid SERIAL PRIMARY KEY,
     username text DEFAULT 'CSE183 Student',
-    avatar text DEFAULT 'placeholder',
+    avatar text DEFAULT '',
     showavatar BOOLEAN DEFAULT FALSE,
     email text,
     password text

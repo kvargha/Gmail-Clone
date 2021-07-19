@@ -486,10 +486,14 @@ components:
           type: string
         showavatar:
           type: boolean
+        email:
+          type: string
+          format: email
       required:
         - username
         - avatar
         - showavatar
+        - email
     
     UnreadResponse:
       additionalProperties: false # https://swagger.io/docs/specification/data-models/data-types/#additionalProperties
