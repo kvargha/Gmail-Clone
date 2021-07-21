@@ -1,6 +1,7 @@
 // Referenced from Professor Harrison's Assignment 6 example
 import React, {useContext, useState} from 'react';
-import {getConfig} from './services/auth';
+import {getConfig, getEmail, getUserId, getUserName} from './services/auth';
+
 import SharedContext from './SharedContext';
 
 // Referenced https://material-ui.com/components/dialogs/#full-screen-dialogs
@@ -122,7 +123,9 @@ function Compose() {
   const handleYes = () => {
     const name = composeTo.split('@');
     const email = {
+      'userid': getUserId(),
       'to': {'name': name[0], 'email': composeTo},
+      'from': {'name': getUserName(), 'email': getEmail()},
       'subject': composeSubject,
       'content': composeContent,
     };
@@ -152,7 +155,9 @@ function Compose() {
   const handleCompose = () => {
     const name = composeTo.split('@');
     const email = {
+      'userid': getUserId(),
       'to': {'name': name[0], 'email': composeTo},
+      'from': {'name': getUserName(), 'email': getEmail()},
       'subject': composeSubject,
       'content': composeContent,
     };

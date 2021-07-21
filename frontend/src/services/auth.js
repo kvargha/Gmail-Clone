@@ -46,6 +46,11 @@ export const getUserId = () => {
   return user ? JSON.parse(user).userid : null;
 };
 
+export const getUserName = () => {
+  const user = localStorage.getItem('user');
+  return user ? JSON.parse(user).username : null;
+};
+
 export const logout = () => {
   localStorage.clear()
 };

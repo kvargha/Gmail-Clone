@@ -4,10 +4,12 @@ const db = require('./db');
 
 const secrets = require('../sql/secrets');
 
+/*
 exports.getPasswordHash = async () => {
   console.log(bcrypt.hashSync('Tehran', 1));
-  console.log(await db.selectUserByEmail('t.y@gmail.com'));
+  console.log(await db.selectUserByEmail('kvargha@ucsc.edu'));
 },
+*/
 
 exports.authenticate = async (req, res) => {
   console.log('inside authenticate');
@@ -25,6 +27,7 @@ exports.authenticate = async (req, res) => {
         });
     user['accessToken'] = accessToken;
     delete user.password;
+    
     res.json(user);
   } else {
     res.status(401).send('Username or password incorrect');

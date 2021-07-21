@@ -125,12 +125,12 @@ exports.selectUser = async (userid) => {
 exports.selectUserByEmail = async (email) => {
   const select =
     `SELECT * FROM userInfo WHERE email ~* $1`;
+  
   const query = {
     text: select,
     values: [email],
   };
   const {rows} = await pool.query(query);
-
   return rows.length>0? {userid: rows[0].userid, username: rows[0].username, email: rows[0].email, password: rows[0].password}: null;
 };
 
@@ -180,10 +180,10 @@ exports.updateUnread = async (id, unread) => {
 
 exports.insertMail = async (mailBody) => {
   // https://www.postgresqltutorial.com/postgresql-insert/
-  const insert = 'INSERT INTO mail(id, mailbox, mail) VALUES ($1, $2, $3)';
+  const insert = 'INSERT INTO mail(id, userid, mailbox, mail) VALUES ($1, $2, $3, $4)';
   const query = {
     text: insert,
-    values: [mailBody.id, mailBody.mailbox.toLowerCase(), mailBody.mail],
+    values: [mailBody.id, mailBody.userid, mailBody.mailbox.toLowerCase(), mailBody.mail],
   };
   await pool.query(query);
 };

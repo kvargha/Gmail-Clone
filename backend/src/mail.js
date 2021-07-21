@@ -37,6 +37,7 @@ exports.getMail = async (req, res) => {
     const mail = {'starred': []};
     mailbox.map((content) => {
       content['mail']['id'] = content['id'];
+      content['mail']['userid'] = content['userid'];
       content['mail']['unread'] = content['unread'];
       content['mail']['starred'] = content['starred'];
       content['mail']['avatar'] = content['avatar'];
@@ -105,13 +106,17 @@ exports.getUser= async (req, res) => {
 
 exports.postUser= async (req, res) => {
   await db.updateUser(req.body);
+  
   res.status(201).send();
 };
 
 exports.getById = async (req, res) => {
   const email = await db.selectMailById(req.params.id);
   if (email) {
+    email['mail']['userid'] = email['userid'];
     email['mail']['id'] = email['id'];
+    email['mail']['starred'] = email['starred'];
+    console.log(email);
     res.status(200).json(email['mail']);
   } else {
     res.status(404).send();
@@ -126,13 +131,13 @@ exports.post = async (req, res) => {
   const date = new Date().toISOString();
   email['mailbox'] = 'sent';
   email['id'] = uuid();
+  email['userid'] = body['userid'];
   email['mail'] = {};
   email['mail']['to'] = body['to'];
   email['mail']['subject'] = body['subject'];
   email['mail']['received'] = body['received'];
   email['mail']['content'] = body['content'];
-  email['mail']['from'] =
-    {'name': 'CSE183 Student', 'email': 'cse183student@ucsc.edu'};
+  email['mail']['from'] = body['from'];
   email['mail']['sent'] = date;
   email['mail']['received'] = date;
   await db.insertMail(email);
@@ -147,13 +152,13 @@ exports.drafts = async (req, res) => {
   const date = new Date().toISOString();
   email['mailbox'] = 'drafts';
   email['id'] = uuid();
+  email['userid'] = body['userid'];
   email['mail'] = {};
   email['mail']['to'] = body['to'];
   email['mail']['subject'] = body['subject'];
   email['mail']['received'] = body['received'];
   email['mail']['content'] = body['content'];
-  email['mail']['from'] =
-    {'name': 'CSE183 Student', 'email': 'cse183student@ucsc.edu'};
+  email['mail']['from'] = body['from'];
   email['mail']['sent'] = date;
   email['mail']['received'] = date;
   await db.insertMail(email);
@@ -189,6 +194,7 @@ exports.put = async (req, res) => {
       } else {
         const emailInsert = {};
         emailInsert['id'] = email['id'];
+        emailInsert['userid'] = email['userid'];
         emailInsert['mailbox'] = query;
         emailInsert['mail'] = email['mail'];
         emailInsert['mail']['id'] = email['id'];

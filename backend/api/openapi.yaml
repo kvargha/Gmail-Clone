@@ -389,6 +389,8 @@ components:
     Mail:
       type: object
       properties:
+        userid:
+          type: integer
         id:
           type: string
         to:
@@ -410,6 +412,7 @@ components:
         avatar:
           type: string
       required:
+        - userid
         - id
         - to
         - subject
@@ -422,9 +425,15 @@ components:
       properties:
         mailbox:
           type: string
+        id:
+          type: string
+        userid:
+          type: integer
         mail:
           type: object
           properties:
+            userid:
+              type: integer
             to:
               $ref: '#/components/schemas/EmailBody'
             subject:
@@ -449,14 +458,20 @@ components:
       additionalProperties: false # https://swagger.io/docs/specification/data-models/data-types/#additionalProperties
       type: object
       properties:
+        userid:
+          type: integer
         to:
+          $ref: '#/components/schemas/EmailBody'
+        from:
           $ref: '#/components/schemas/EmailBody'
         subject:
           type: string
         content:
           type: string
       required:
+        - userid
         - to
+        - from
         - subject
         - content
 

@@ -1,7 +1,6 @@
 // Referenced from Professor Harrison's Assignment 6 example
 import React, {useContext, useState, useEffect} from 'react';
-import {getConfig} from './services/auth';
-import {getEmail, getUserId, logout} from './services/auth';
+import {getConfig, getEmail, getUserId, logout} from './services/auth';
 import {useHistory} from 'react-router-dom';
 import {fade, makeStyles} from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -158,10 +157,6 @@ function TitleBar() {
     setSearchVal('');
     setSearch(false);
   };
-
-  const formatEmail = () => {
-    const email = getEmail()
-  }
 
   const handleClose = () => {
     // http://zetcode.com/javascript/axios/
