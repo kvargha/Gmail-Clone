@@ -99,7 +99,7 @@ exports.addMailbox = async (req, res) => {
 };
 
 exports.getUser= async (req, res) => {
-  const user = await db.selectUser();
+  const user = await db.selectUser(req.query.userid);
   res.status(200).json(user);
 };
 

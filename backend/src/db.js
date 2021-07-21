@@ -106,30 +106,32 @@ exports.selectAllMailboxes = async () => {
   return [...emails];
 };
 
-exports.selectUser = async () => {
-  const select = 'SELECT * FROM userInfo';
+exports.selectUser = async (userid) => {
+  const select = 'SELECT * FROM userInfo WHERE userid = $1';
 
   const query = {
     text: select,
+    values: [userid],
   };
   const {rows} = await pool.query(query);
   const user = [];
   for (const row of rows) {
     user.push(row);
   }
+  
   return user;
 };
 
 exports.selectUserByEmail = async (email) => {
   const select =
-    `SELECT userid, password FROM userInfo where email ~* $1`;
+    `SELECT * FROM userInfo WHERE email ~* $1`;
   const query = {
     text: select,
     values: [email],
   };
   const {rows} = await pool.query(query);
 
-  return rows.length>0? {id: rows[0].userid, password: rows[0].password}: null;
+  return rows.length>0? {userid: rows[0].userid, username: rows[0].username, email: rows[0].email, password: rows[0].password}: null;
 };
 
 exports.updateUser = async (userBody) => {

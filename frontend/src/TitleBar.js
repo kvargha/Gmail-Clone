@@ -1,7 +1,7 @@
 // Referenced from Professor Harrison's Assignment 6 example
 import React, {useContext, useState, useEffect} from 'react';
 import {getConfig} from './services/auth';
-import {getEmail, logout} from './services/auth';
+import {getEmail, getUserId, logout} from './services/auth';
 import {useHistory} from 'react-router-dom';
 import {fade, makeStyles} from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -119,11 +119,11 @@ function TitleBar() {
   const {setCompose} = useContext(SharedContext);
   const {editUser, setEditUser} = useContext(SharedContext);
   const {setFromTitleBar} = useContext(SharedContext);
+  const {userEmail, setUserEmail} = useContext(SharedContext);
 
   const [avatar, setAvatar] = useState();
   const [avatarOn, setAvatarOn] = useState();
   const [userName, setUserName] = useState();
-  const [email, setEmail] = useState();
 
   const [prompt, setPrompt] = useState(false);
   const [editAvatar, changeAvatar] = useState(false);
@@ -159,9 +159,13 @@ function TitleBar() {
     setSearch(false);
   };
 
+  const formatEmail = () => {
+    const email = getEmail()
+  }
+
   const handleClose = () => {
     // http://zetcode.com/javascript/axios/
-    axios.get('http://localhost:3010/v0/user', getConfig())
+    axios.get('http://localhost:3010/v0/user?userid=' + getUserId(), getConfig())
         .then((res) => {
           const userBody = res.data[0];
           if (avatar != userBody['avatar'] ||
@@ -187,7 +191,7 @@ function TitleBar() {
       'showavatar': avatarOn,
       'email': getEmail(),
     };
-    console.log(userInfo);
+    
     // http://zetcode.com/javascript/axios/
     axios.post('http://localhost:3010/v0/user/', userInfo, getConfig('post'))
         .then((res) => {
@@ -197,7 +201,7 @@ function TitleBar() {
 
   const handleNo = () => {
     // http://zetcode.com/javascript/axios/
-    axios.get('http://localhost:3010/v0/user', getConfig())
+    axios.get('http://localhost:3010/v0/user?userid=' + getUserId(), getConfig())
         .then((res) => {
           const userBody = res.data[0];
           setAvatar(userBody['avatar']);
@@ -228,10 +232,10 @@ function TitleBar() {
   // https://stackoverflow.com/questions/60592759/setting-state-without-re-rendering-with-useeffect-not-working
   useEffect(() => {
     // http://zetcode.com/javascript/axios/
-    axios.get('http://localhost:3010/v0/user', getConfig())
+    axios.get('http://localhost:3010/v0/user?userid=' + getUserId(), getConfig())
         .then((res) => {
           const userBody = res.data[0];
-          setEmail(getEmail())
+          setUserEmail(getEmail())
           setAvatar(userBody['avatar']);
           setAvatarOn(userBody['showavatar']);
           setUserName(userBody['username']);
@@ -353,7 +357,7 @@ function TitleBar() {
               secondary={
                 <div>
                   <Typography // https://material-ui.com/components/typography/#typography
-                  >{email}</Typography>
+                  >{userEmail}</Typography>
                   <div>
                     <IconButton edge='start' color='inherit'
                       onClick={() => {

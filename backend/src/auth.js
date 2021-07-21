@@ -3,7 +3,6 @@ const bcrypt = require('bcrypt');
 const db = require('./db');
 
 const secrets = require('../sql/secrets');
-// var users = require('../data/users.json');
 
 exports.getPasswordHash = async () => {
   console.log(bcrypt.hashSync('Tehran', 1));
@@ -13,9 +12,7 @@ exports.getPasswordHash = async () => {
 exports.authenticate = async (req, res) => {
   console.log('inside authenticate');
   const {email, password} = req.body;
-  console.log(req.body);
   const existingUser = await db.selectUserByEmail(email);
-  console.log(existingUser);
   const user = existingUser &&
   bcrypt.compareSync(password,
       existingUser.password) ? existingUser : null;
@@ -26,13 +23,15 @@ exports.authenticate = async (req, res) => {
           expiresIn: '60m',
           algorithm: 'HS256',
         });
-    res.json({name: user.name, accessToken: accessToken, url: user.url, email: user.email});
+    user['accessToken'] = accessToken;
+    delete user.password;
+    res.json(user);
   } else {
     res.status(401).send('Username or password incorrect');
   }
 };
 
-// Next will go to the next layer(Book.js)
+// Check if JWT is valid
 exports.check = (req, res, next) => {
   const authHeader = req.headers.authorization;
   if (authHeader) {
@@ -41,8 +40,6 @@ exports.check = (req, res, next) => {
       if (err) {
         return res.sendStatus(403);
       }
-      console.log('userInfo');
-      console.log(user);
       req.user = user;
       next();
     });

@@ -70,6 +70,7 @@ function App() {
   const [avatar, setAvatar] = useState('');
   const [editUser, setEditUser] = useState(false);
   const [fromTitleBar, setFromTitleBar] = useState(false);
+  const [userEmail, setUserEmail] = useState();
 
   window.addEventListener('resize', () => {
     setDrawerOpen(false);
@@ -113,6 +114,7 @@ function App() {
         viewDesktop, setViewDesktop,
         editUser, setEditUser,
         fromTitleBar, setFromTitleBar,
+        userEmail, setUserEmail,
       }}
       >
         <Router>
@@ -138,8 +140,6 @@ function App() {
             </Route>
           </Switch>
         </Router>
-
-
       </SharedContext.Provider>
     </div>
   );

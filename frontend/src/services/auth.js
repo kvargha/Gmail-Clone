@@ -18,7 +18,6 @@ export const authenticate = (user) => {
       return res.json();
     })
     .then((token) => {
-      localStorage.setItem('email', JSON.stringify({'email': user.email}));
       localStorage.setItem('user', JSON.stringify(token));
       return user;
     })
@@ -38,10 +37,15 @@ export const getConfig = (method = 'get') => {
 };
 
 export const getEmail = () => {
-  const email = localStorage.getItem('email');
-  return email ? JSON.parse(email).email : null;
+  const user = localStorage.getItem('user');
+  return user ? JSON.parse(user).email : null;
+};
+
+export const getUserId = () => {
+  const user = localStorage.getItem('user');
+  return user ? JSON.parse(user).userid : null;
 };
 
 export const logout = () => {
   localStorage.clear()
-}
+};

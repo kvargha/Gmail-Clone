@@ -196,6 +196,12 @@ paths:
   /v0/user:
     get:
       description: Gets info on user
+      parameters:
+        - in: query
+          name: userid
+          description: Id of user
+          schema:
+            type: integer
       responses:
         200:
           description: Return all user info
