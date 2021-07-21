@@ -30,18 +30,18 @@ app.use(
 
 // Your routes go here
 app.post('/auth', auth.authenticate);
-app.get('/v0/mail', mail.getMail);
-app.get('/v0/mail/:id', mail.getById);
-app.get('/v0/emails', mail.getEmails);
-app.get('/v0/mailboxes', mail.getMailboxes);
-app.get('/v0/user', mail.getUser);
-app.get('/v0/unread', mail.getUnreadCount);
-app.post('/v0/mailboxes', mail.addMailbox);
-app.post('/v0/user', mail.postUser);
-app.post('/v0/mail', mail.post);
-app.post('/v0/drafts', mail.drafts);
-app.put('/v0/mail/:id', mail.put);
-app.delete('/v0/mail/:id', mail.delete);
+app.get('/v0/mail', auth.check, mail.getMail);
+app.get('/v0/mail/:id', auth.check, mail.getById);
+app.get('/v0/emails', auth.check, mail.getEmails);
+app.get('/v0/mailboxes', auth.check, mail.getMailboxes);
+app.get('/v0/user', auth.check, mail.getUser);
+app.get('/v0/unread', auth.check, mail.getUnreadCount);
+app.post('/v0/mailboxes', auth.check, mail.addMailbox);
+app.post('/v0/user', auth.check, mail.postUser);
+app.post('/v0/mail', auth.check, mail.post);
+app.post('/v0/drafts', auth.check, mail.drafts);
+app.put('/v0/mail/:id', auth.check, mail.put);
+app.delete('/v0/mail/:id', auth.check, mail.delete);
 
 app.use((err, req, res, next) => {
   res.status(err.status).json({
